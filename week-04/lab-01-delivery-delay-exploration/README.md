@@ -1,9 +1,31 @@
-# Integrated Industry Lab 3 — Delivery-stop delay exploration
+# Week 4 — Lab 1: Delivery-stop delay exploration
 
 **Assessment:** one individual submission, 5%
 **Topic:** univariate exploration
 **Business case:** Redwood Delivery Co. wants to describe routine delivery-stop
 delays accurately before changing how it communicates service performance.
+
+## Before you start
+
+This is one individual graded lab worth 5%. Complete all requirements in this
+one folder, then make **one** D2L submission.
+
+1. Clone or pull the Graded Labs repository.
+2. Copy `week-04/lab-01-delivery-delay-exploration` into your private AIDA 2156
+   repository. Keep the folder name unchanged.
+3. Open the copied folder in VS Code.
+4. Run:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+py -m pip install -r requirements.txt
+py analysis/starter.py
+```
+
+5. Complete the starter, save all required outputs in `output/`, and complete
+   the decision note required by the rubric.
+6. Do not push to this instructor repository.
 
 ## Your question
 
@@ -98,6 +120,12 @@ Keep all work in this one lab folder and include:
 This is **one 5% lab submission**. Make meaningful commits, push the completed
 lab folder to your assigned private AIDA 2156 repository, and submit **one**
 private repository link in D2L. Do not push to an instructor repository.
+
+```powershell
+git add .
+git commit -m "Complete AIDA 2156 Lab 1"
+git push
+```
 
 The guided and independent sections are assessed within the one lab rubric;
 they are not separate submissions.

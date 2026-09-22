@@ -2,6 +2,23 @@
 
 **AIDA 2156 | Individual | 5% total | One GitHub/D2L submission**
 
+## Before you start
+
+1. Clone or pull the Graded Labs repository.
+2. Copy `week-05/lab-02-dispatch-relationships` into your private AIDA 2156
+   repository. Keep the folder name unchanged.
+3. Open the copied folder in VS Code and run:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+py -m pip install -r requirements.txt
+py analysis/starter.py
+```
+
+4. Complete every task below and save your work in this same folder.
+5. Do not push to this instructor repository.
+
 ## Scenario
 
 Northstar Field Services wants to understand whether more difficult service calls require more technician time. Management also wants to know whether service region changes the pattern.
@@ -30,7 +47,7 @@ What relationship, if any, is visible between `job_difficulty_score` and `techni
 Work in your assigned private AIDA 2156 repository. Create this folder there and include:
 
 ```text
-week-05-lab-02-dispatch-relationships/
+week-05/lab-02-dispatch-relationships/
   analysis/analysis.py
   output/dispatch_relationships.png
   output/region_summary.csv
@@ -46,3 +63,9 @@ You may begin with `analysis/starter.py`, but rename or copy it to `analysis/ana
 3. Submit **one link** to that repository through the Lab 2 D2L assignment.
 
 Do not push work to the instructor Graded Labs repository.
+
+```powershell
+git add .
+git commit -m "Complete AIDA 2156 Lab 2"
+git push
+```

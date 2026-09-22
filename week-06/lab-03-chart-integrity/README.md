@@ -2,6 +2,23 @@
 
 **AIDA 2156 | Individual | 5% total | One GitHub/D2L submission**
 
+## Before you start
+
+1. Clone or pull the Graded Labs repository.
+2. Copy `week-06/lab-03-chart-integrity` into your private AIDA 2156
+   repository. Keep the folder name unchanged.
+3. Open the copied folder in VS Code and run:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+py -m pip install -r requirements.txt
+py analysis/starter.py
+```
+
+4. Complete every task below and save your work in this same folder.
+5. Do not push to this instructor repository.
+
 ## Scenario
 
 Northstar Community Clinics is preparing a monthly operations briefing. The
@@ -34,7 +51,7 @@ choices are required for the comparison to be honest and decision-useful?
 Work in your assigned private AIDA 2156 repository. Create this folder there:
 
 ```text
-week-06-lab-03-chart-integrity/
+week-06/lab-03-chart-integrity/
   analysis/analysis.py
   output/site_wait_summary.csv
   output/wait_time_by_site.png
@@ -53,3 +70,9 @@ You may start with `analysis/starter.py`, but rename or copy it to
 
 The rubric criteria are marking dimensions within one 5% submission. Do not
 push work to the instructor Graded Labs repository.
+
+```powershell
+git add .
+git commit -m "Complete AIDA 2156 Lab 3"
+git push
+```
