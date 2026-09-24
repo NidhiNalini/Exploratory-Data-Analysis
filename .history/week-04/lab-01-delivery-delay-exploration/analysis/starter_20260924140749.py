@@ -3,6 +3,7 @@ from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = ROOT / "data" / "delivery_delays.csv"
 OUTPUT = ROOT / "output"
@@ -42,10 +43,7 @@ def write_starter_profile(deliveries: pd.DataFrame) -> None:
         }
     )
 
-    profile.to_csv(
-        OUTPUT / "starter_profile.csv",
-        index=False
-    )
+    profile.to_csv(OUTPUT / "starter_profile.csv", index=False)
 
 
 def main() -> None:
@@ -55,103 +53,89 @@ def main() -> None:
 
     write_starter_profile(deliveries)
 
-    print("Dataset grain: one row = one completed delivery stop")
-    print(f"Total records: {len(deliveries)}")
+    print(
+        f"Starter checks passed for {len(deliveries)} fictional delivery-stop records."
+    )
+    print("Created output/starter_profile.csv.")
 
-    # Step 1
+    # STEP 1
     deliveries["delay_minutes"] = pd.to_numeric(
         deliveries["delay_minutes"],
         errors="coerce"
     )
 
-    missing_values = deliveries["delay_minutes"].isna().sum()
+    missing_delays = deliveries["delay_minutes"].isna().sum()
 
-    print(f"Missing delay values: {missing_values}")
+    print(f"Missing delay values: {missing_delays}")
 
-    # Step 2
-    usable_delays = deliveries["delay_minutes"].dropna()
-
-    q1 = usable_delays.quantile(0.25)
-    q3 = usable_delays.quantile(0.75)
-    iqr = q3 - q1
-
-    delay_summary = pd.DataFrame(
-        {
-            "Metric": [
-                "Usable Row Count",
-                "Mean",
-                "Median",
-                "Minimum",
-                "Maximum",
-                "Q1",
-                "Q3",
-                "IQR",
-            ],
-            "Value": [
-                len(usable_delays),
-                usable_delays.mean(),
-                usable_delays.median(),
-                usable_delays.min(),
-                usable_delays.max(),
-                q1,
-                q3,
-                iqr,
-            ],
-        }
-    )
+    # STEP 2
+    delay_summary = deliveries["delay_minutes"].describe()
 
     delay_summary.to_csv(
         OUTPUT / "delay_summary.csv",
-        index=False
+        header=["value"]
     )
 
     print("Created delay_summary.csv")
 
-    # Step 3
+    # STEP 3
+    q1 = deliveries["delay_minutes"].quantile(0.25)
+    q3 = deliveries["delay_minutes"].quantile(0.75)
+
+    iqr = q3 - q1
+
     upper_fence = q3 + (1.5 * iqr)
 
-    possible_high_delays = deliveries[
+    high_delay_records = deliveries[
         deliveries["delay_minutes"] > upper_fence
     ]
 
-    possible_high_delays.to_csv(
-        OUTPUT / "possible_high_delays.csv",
+    high_delay_records.to_csv(
+        OUTPUT / "high_delay_records.csv",
         index=False
     )
 
-    print("Created possible_high_delays.csv")
+    print("Created high_delay_records.csv")
 
-    # Step 4 - Combined chart
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-    axes[0].hist(
-        usable_delays,
+    # STEP 4 Histogram
+    plt.figure(figsize=(8, 5))
+    deliveries["delay_minutes"].dropna().hist(
         bins=10,
         edgecolor="black"
     )
-    axes[0].set_title("Delivery Delay Histogram")
-    axes[0].set_xlabel("Delay Minutes")
-    axes[0].set_ylabel("Frequency")
 
-    axes[1].boxplot(
-        usable_delays,
-        orientation="vertical"
-    )
-    axes[1].set_title("Delivery Delay Box Plot")
-    axes[1].set_ylabel("Delay Minutes")
+    plt.title("Distribution of Delivery Delays")
+    plt.xlabel("Delay Minutes")
+    plt.ylabel("Frequency")
 
     plt.tight_layout()
-    plt.savefig(OUTPUT / "delay_charts.png")
+    plt.savefig(OUTPUT / "delay_histogram.png")
     plt.close()
 
-    print("Created delay_charts.png")
+    # STEP 4 Box Plot
+    plt.figure(figsize=(8, 5))
 
-    # Step 5 - Independent Analysis
+    plt.boxplot(
+        deliveries["delay_minutes"].dropna(),
+        vert=True
+    )
+
+    plt.title("Delivery Delay Box Plot")
+    plt.ylabel("Delay Minutes")
+
+    plt.tight_layout()
+    plt.savefig(OUTPUT / "delay_boxplot.png")
+    plt.close()
+
+    print("Created delay_histogram.png")
+    print("Created delay_boxplot.png")
+
+    # STEP 5 Independent Univariate Analysis
     package_summary = deliveries["package_weight_kg"].describe()
 
     package_summary.to_csv(
         OUTPUT / "package_weight_summary.csv",
-        header=["Value"]
+        header=["value"]
     )
 
     plt.figure(figsize=(8, 5))
@@ -169,6 +153,7 @@ def main() -> None:
     plt.savefig(
         OUTPUT / "package_weight_histogram.png"
     )
+
     plt.close()
 
     print("Created package_weight_summary.csv")
